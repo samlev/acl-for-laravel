@@ -1,0 +1,49 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create(config('acl.database.grants_table'), function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')
+                ->references('id')
+                ->on('users')
+                ->cascadeOnDelete();
+            $table->json('permissions');
+
+            if (config('acl.database.with_scopes')) {
+                if (config('acl.database.with_polymorphic_scopes')) {
+                    $table->nullableMorphs('scope');
+                } else {
+                    $table->foreignId('scope_id')->nullable();
+                }
+            }
+
+            $table->timestamps();
+        });
+
+        Schema::create(config('acl.database.roles_table'), function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')
+                ->references('id')
+                ->on('users')
+                ->cascadeOnDelete();
+            $table->string('role')->index();
+
+            if (config('acl.database.with_scopes')) {
+                if (config('acl.database.with_polymorphic_scopes')) {
+                    $table->nullableMorphs('scope');
+                } else {
+                    $table->foreignId('scope_id')->nullable();
+                }
+            }
+
+            $table->timestamps();
+        });
+    }
+};
