@@ -2,7 +2,7 @@
 
 return [
     'defaults' => [
-       'guard' => 'web',
+        'guard' => 'web',
     ],
 
     'guards' => [
@@ -11,9 +11,9 @@ return [
                 SamLev\Acl\Preset\Roles\UserRole::class,
             ],
             'permissions' => [
-                SamLev\Acl\Preset\Permissions\BasicPermission::class,
-            ]
-        ]
+                SamLev\Acl\Preset\Permissions\UserPermission::class,
+            ],
+        ],
     ],
 
     'database' => [

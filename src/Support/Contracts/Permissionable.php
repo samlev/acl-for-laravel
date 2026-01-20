@@ -2,7 +2,4 @@
 
 namespace SamLev\Acl\Support\Contracts;
 
-interface NamedPermission
-{
-
-}
+interface Permissionable {}

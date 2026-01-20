@@ -2,7 +2,6 @@
 
 namespace SamLev\Acl\Preset\Roles;
 
-use SamLev\Acl\Preset\Permissions\BasicPermission;
 use SamLev\Acl\Support\Contracts\NamedRole;
 
 enum UserRole: string implements NamedRole
@@ -13,9 +12,16 @@ enum UserRole: string implements NamedRole
     public function grants(): array
     {
         return match ($this) {
-            self::admin => BasicPermission::cases(),
+            self::admin => [
+                'users' => [
+                    'view' => true,
+                    'update' => true,
+                ],
+            ],
             self::user => [
-                BasicPermission::view,
+                'users' => [
+                    'view' => true,
+                ],
             ],
         };
     }
